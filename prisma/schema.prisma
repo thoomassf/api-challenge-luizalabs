@@ -20,7 +20,7 @@ model FavoriteProducts {
   id          String   @id @default(uuid())
   title       String
   description String?
-  added_at    DateTime @default(now())
+  product_ids String[] @default([])
   user        User     @relation("UserFavoriteProducts", fields: [user_id], references: [id])
   user_id     String   @unique
 }
