@@ -18,7 +18,7 @@ export class PrismaFavoriteProductsRepository
   async findByUserId(userId: string): Promise<FavoriteProducts | null> {
     const favoriteProducts = await prisma.favoriteProducts.findUnique({
       where: {
-        userId,
+        user_id: userId,
       },
     });
 
