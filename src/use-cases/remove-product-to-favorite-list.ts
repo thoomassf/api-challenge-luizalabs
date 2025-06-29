@@ -1,20 +1,19 @@
 import type { FavoriteProductsRepository } from "../repositories/favorite-products-repository";
 import { FavoriteProductsNotFound } from "./errors/favorite-products-not-found";
-import { MaximumLimitProductsInFavoritesList } from "./errors/maximum-limit-products-in-favorites-list";
-import { ProductAlreadyExistsInFavoriteList } from "./errors/product-already-exists-in-favorite-list";
+import { ProductNotInFavoriteList } from "./errors/product-not-in-favorite-list";
 
-interface AddProductToFavoriteListRequest {
+interface RemoveProductToFavoriteListRequest {
   favoriteProductsId: string;
   productId: string;
 }
 
-export class AddProductToFavoriteListUseCase {
+export class RemoveProductToFavoriteListUseCase {
   constructor(private favoriteProductsRepository: FavoriteProductsRepository) {}
 
   async execute({
     favoriteProductsId,
     productId,
-  }: AddProductToFavoriteListRequest): Promise<void> {
+  }: RemoveProductToFavoriteListRequest): Promise<void> {
     const favoriteProducts =
       await this.favoriteProductsRepository.findById(favoriteProductsId);
 
@@ -22,15 +21,13 @@ export class AddProductToFavoriteListUseCase {
       throw new FavoriteProductsNotFound();
     }
 
-    if (favoriteProducts.product_ids.length === 5) {
-      throw new MaximumLimitProductsInFavoritesList();
+    if (!favoriteProducts.product_ids.includes(productId)) {
+      throw new ProductNotInFavoriteList();
     }
 
-    if (favoriteProducts.product_ids.includes(productId)) {
-      throw new ProductAlreadyExistsInFavoriteList();
-    }
-
-    favoriteProducts.product_ids.push(productId);
+    favoriteProducts.product_ids = favoriteProducts.product_ids.filter(
+      (id) => id !== productId,
+    );
 
     await this.favoriteProductsRepository.update(favoriteProductsId, {
       product_ids: favoriteProducts.product_ids,

@@ -5,6 +5,7 @@ import { AddProductToFavoriteListUseCase } from "./add-product-to-favorite-list"
 import { GetFavoriteProductsUseCase } from "./get-favorite-products";
 import { ProductAlreadyExistsInFavoriteList } from "./errors/product-already-exists-in-favorite-list";
 import { FavoriteProductsNotFound } from "./errors/favorite-products-not-found";
+import { MaximumLimitProductsInFavoritesList } from "./errors/maximum-limit-products-in-favorites-list";
 
 let favoriteProductsRepository: InMemoryFavoriteProducts;
 let createFavoriteProductsUseCase: CreateFavoriteProductsUseCase;
@@ -69,5 +70,45 @@ describe("Add Product To Favorite List Use Case", () => {
         productId: "prod-1",
       }),
     ).rejects.toBeInstanceOf(FavoriteProductsNotFound);
+  });
+
+  it("should not add the product if it already exists in the list", async () => {
+    const { favoriteProducts } = await createFavoriteProductsUseCase.execute({
+      title: "Favorite list 1",
+      description: "Favorite list description",
+      userId: "user-01",
+    });
+
+    await sut.execute({
+      favoriteProductsId: favoriteProducts.id,
+      productId: "prod-1",
+    });
+
+    await sut.execute({
+      favoriteProductsId: favoriteProducts.id,
+      productId: "prod-2",
+    });
+
+    await sut.execute({
+      favoriteProductsId: favoriteProducts.id,
+      productId: "prod-3",
+    });
+
+    await sut.execute({
+      favoriteProductsId: favoriteProducts.id,
+      productId: "prod-4",
+    });
+
+    await sut.execute({
+      favoriteProductsId: favoriteProducts.id,
+      productId: "prod-5",
+    });
+
+    await expect(() =>
+      sut.execute({
+        favoriteProductsId: favoriteProducts.id,
+        productId: "prod-6",
+      }),
+    ).rejects.toBeInstanceOf(MaximumLimitProductsInFavoritesList);
   });
 });
