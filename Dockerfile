@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS base
+FROM node:lts AS base
 
 FROM base AS deps
 
@@ -21,6 +21,8 @@ RUN chown api:nodejs .
 
 COPY --chown=api:nodejs . .
 COPY --from=deps /app/node_modules ./node_modules
+
+RUN npx prisma generate
 
 USER api
 

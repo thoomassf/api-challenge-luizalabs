@@ -15,7 +15,6 @@ const sdk = new NodeSDK({
   instrumentations: [getNodeAutoInstrumentations()],
 });
 
-// 👉 start() devolve void; apenas chame e siga a vida
 sdk.start();
 console.log("✅ Tracing initialized (sync start)");
 
