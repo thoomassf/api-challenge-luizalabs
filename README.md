@@ -28,9 +28,9 @@ Favoritar Produtos
 ### 📥 Clone o projeto
 
 ```bash
-git clone https://github.com/thoomassf/daily-diet-api.git && cd daily-diet-api
+git clone https://github.com/thoomassf/api-challenge-luizalabs.git && cd api-challenge-luizalabs
 # ou
-gh repo clone thoomassf/daily-diet-api && cd daily-diet-api
+gh repo clone thoomassf/api-challenge-luizalabs && cd api-challenge-luizalabs
 ```
 
 ### ⚙️ Instalação das dependências
