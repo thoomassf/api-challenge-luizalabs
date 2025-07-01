@@ -71,8 +71,6 @@ npm run test
 ```
 Testes e2e
 ```bash
-npm run test:create-prisma-environment
-npm run test:install-prisma-environment
 npm run pretest:e2e
 npm run test:e2e
 ```

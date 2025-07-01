@@ -24,6 +24,8 @@ COPY --from=deps /app/node_modules ./node_modules
 
 RUN npx prisma generate
 
+RUN npm run build
+
 USER api
 
 EXPOSE 3333

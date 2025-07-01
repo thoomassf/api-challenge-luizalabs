@@ -12,8 +12,6 @@ export async function getFavoriteProductsList(
 
   const { user_id } = paramsSchema.parse(request.params);
 
-  console.log(user_id);
-
   const getFavoriteProductsUseCase = makeGetFavoriteProductsUseCase();
 
   const { favoriteProducts } = await getFavoriteProductsUseCase.execute({
