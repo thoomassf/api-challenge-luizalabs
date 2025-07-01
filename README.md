@@ -46,9 +46,15 @@ cp .env.example .env
 Edite suas variáveis de ambiente conforme necessário.
 
 ### 📈 Inicializar banco de dados
-anco de dados no Docker (PostgreSQL)
+banco de dados no Docker (PostgreSQL)
 ```bash
 docker-compose up -d
+```
+Execute as migrações do Prisma: 
+Se executar a api no docker é necessário rodar o comando no Exec do container
+Obs: caso já tenha rodado as migrações, não é necessário executar novamente
+```bash
+npx prisma migrate dev
 ```
 
 ### 🚀 Rodar o servidor
