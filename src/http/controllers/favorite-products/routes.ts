@@ -45,15 +45,15 @@ export async function FavoriteProductsRoutes(app: FastifyInstance) {
         }),
         response: {
           200: z.object({
-            id: z.string().uuid(),
-            title: z.string(),
-            description: z.string().nullable(),
-            product_ids: z.array(
-              z.object({
-                product_id: z.string(),
-              }),
-            ),
-            user_id: z.string().uuid(),
+            favoriteProducts: z
+              .object({
+                id: z.string(),
+                title: z.string(),
+                description: z.string().nullable(),
+                user_id: z.string(),
+                product_ids: z.array(z.string()),
+              })
+              .nullable(),
           }),
         },
       },
@@ -108,6 +108,9 @@ export async function FavoriteProductsRoutes(app: FastifyInstance) {
         params: z.object({
           id: z.string().uuid(),
         }),
+        body: z.object({
+          product_id: z.string(),
+        }),
       },
     },
     addProductToFavoriteList,
@@ -121,6 +124,9 @@ export async function FavoriteProductsRoutes(app: FastifyInstance) {
         summary: "Create a new favorite products list",
         params: z.object({
           id: z.string().uuid(),
+        }),
+        body: z.object({
+          product_id: z.string(),
         }),
       },
     },

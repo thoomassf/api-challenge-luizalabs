@@ -7,6 +7,8 @@ const envSchema = z.object({
     .default("development"),
   PORT: z.coerce.number().default(3333),
   JWT_SECRET: z.string(),
+  OTEL_SERVICE_NAME: z.string(),
+  OTEL_EXPORTER_OTLP_ENDPOINT: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);
