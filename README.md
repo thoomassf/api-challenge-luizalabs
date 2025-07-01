@@ -74,5 +74,10 @@ npm run test:e2e
 ### 👁️ Tracing Jaeger
 Utilizei o Jaeger para observabilidade local.
 
-Disponível em: http://localhost:16686
+O Jeager será inicializado junto com o banco de dados.
+
+```bash
+docker-compose up -d
 ```
+
+Disponível em: http://localhost:16686
